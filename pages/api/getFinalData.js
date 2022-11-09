@@ -1,0 +1,23 @@
+import axios from "axios";
+
+export default async function handler(req, res) {
+
+  if (req.method === "POST") {
+    try {
+        const id = req.body.id;
+        console.log(id, "to send the id of the user to the api to get nft Data")
+      var config = {
+        method: "post",
+        url: "http://13.126.156.148:5000/api/v1/auth/getallnft",data:{id:id}
+      };
+      console.log(config)
+      await axios(config).then(function (response) {
+        console.log(JSON.stringify(response.data));
+        res.status(200).json({ data: response.data });
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ Error: err });
+    }
+  }
+}
